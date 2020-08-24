@@ -22,7 +22,13 @@
         "yii2mod/collection": "*",
         "yii2mod/yii2-image": "*",
         "codemix/yii2-localeurls": "^1.7",
-        "omgdef/yii2-multilingual-behavior": "~2.0"
+        "omgdef/yii2-multilingual-behavior": "~2.0",
+        "demogorgorn/yii2-jquery-sortable": "dev-master",
+        "kartik-v/yii2-widget-activeform": "@dev",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-widget-depdrop": "@dev",
+        "powerkernel/yii2-slugify": "*"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
