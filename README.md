@@ -64,3 +64,8 @@ Packages used:
 ##### [Yii2 Image Extension](https://github.com/yii2mod/yii2-image)
 ##### [Yii2 LocaleUrls](https://github.com/codemix/yii2-localeurls/)
 ##### [Yii2 multilingual behavior](https://github.com/OmgDef/yii2-multilingual-behavior)
+##### [Yii2 jquery sortable](https://github.com/demogorgorn/yii2-jquery-sortable)
+##### [Kartik ActiveForm](https://github.com/kartik-v/yii2-widget-activeform)
+##### [Kartik Select2](https://github.com/kartik-v/yii2-widget-select2)
+##### [Kartik DepDrop](https://github.com/kartik-v/yii2-widget-depdrop)
+##### [Yii2 Slugify](https://www.yiiframework.com/extension/yii2-slugify)

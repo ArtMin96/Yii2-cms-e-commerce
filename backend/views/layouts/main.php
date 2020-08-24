@@ -7,9 +7,13 @@ use yii\helpers\Html;
 
 \hail812\adminlte3\assets\FontAwesomeAsset::register($this);
 \hail812\adminlte3\assets\AdminLteAsset::register($this);
+$bundle = \hail812\adminlte3\assets\PluginAsset::register($this);
+
 $this->registerCssFile('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700');
 
 $assetDir = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
+$bundle->css[] = '/css/site.css';
+$bundle->css[] = '/css/artmin-menu.css';
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

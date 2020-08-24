@@ -1,0 +1,82 @@
+.artmin-menu-detail-title {
+    font-size: 1.5rem;
+    color: #3c4b5f;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.artmin-menu > .artmin-menu-list {
+    padding: 0;
+}
+
+.artmin-menu .artmin-menu-list {
+    margin: 0;
+    /*padding: 0 0 0 40px;*/
+    list-style-type: none;
+}
+
+.artmin-menu-list:not(:first-child) {
+    margin: 1rem 0;
+}
+
+.artmin-menu-item:first-child {
+    margin-top: 0;
+}
+
+.artmin-menu-item {
+    position: relative;
+    margin: 10px 0 0;
+}
+
+.artmin-menu-item-content {
+    /* padding: 10px; */
+    border: 1px solid #fff;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+.artmin-menu-item-handle {
+    width: 100%;
+    padding: 0 10px 0 0;
+    height: 45px;
+    line-height: 45px;
+}
+
+.artmin-menu-item-data {
+    width: 66.66667%;
+    padding-left: .75rem;
+}
+
+.artmin-menu-item-title {
+    color: #3c4b5f;
+}
+
+.artmin-menu-item-alias {
+    font-size: .875rem;
+    color: #7c858e;
+    margin-left: 1rem;
+}
+
+.artmin-menu-item-buttons {
+    width: 33.33333%;
+}
+
+.artmin-menu-btn {
+    color: #b3b9bf;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    padding: 0;
+}
+
+.artmin-menu-btn:not(:last-child) {
+    margin-right: .75rem;
+}
+
+.artmin-menu-btn:last-child {
+    margin-right: .25rem;
+}
