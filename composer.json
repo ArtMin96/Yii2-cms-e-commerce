@@ -27,7 +27,8 @@
         "kartik-v/yii2-widget-activeform": "@dev",
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-widget-depdrop": "@dev",
-        "powerkernel/yii2-slugify": "*"
+        "powerkernel/yii2-slugify": "*",
+        "schmunk42/yii2-giiant": "@dev"
 
     },
     "require-dev": {

@@ -9,6 +9,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Pages */
 /* @var $form yii\widgets\ActiveForm */
+
+$pages = new \common\models\Pages();
 ?>
 
 <nav class="nav nav-pills flex-column flex-sm-row mb-3" id="pills-tab" role="tablist">
@@ -71,7 +73,7 @@ use yii\helpers\Html;
             <div class="col-sm-12 col-md-4">
                 <?= $form->field($model, 'parent_id')->widget(Select2::className(), [
                     'theme' => Select2::THEME_KRAJEE_BS4,
-                    'data' => \yii\helpers\ArrayHelper::map($skipedNodes, 'id', 'name'),
+                    'data' => !empty($skipedNodes)? \yii\helpers\ArrayHelper::map($skipedNodes, 'id', 'name') : [],
                     'hideSearch' => true,
                     'maintainOrder' => true,
                     'options' => ['placeholder' => Yii::t('backend', 'Select')],
@@ -110,3 +112,5 @@ use yii\helpers\Html;
     <div class="tab-pane fade" id="pills-page-content" role="tabpanel" aria-labelledby="pills-page-content-tab">...</div>
     <div class="tab-pane fade" id="pills-seo" role="tabpanel" aria-labelledby="pills-seo-tab">...</div>
 </div>
+
+<?= \common\widgets\ArtMinScrollUp\ArtMinScrollUpWidget::widget() ?>

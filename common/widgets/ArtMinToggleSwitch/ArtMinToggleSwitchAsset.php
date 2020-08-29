@@ -24,12 +24,11 @@ class ArtMinToggleSwitchAsset extends AssetBundle
     ];
 
     public $publishOptions = [
-        'forceCopy'=>true,
+        'forceCopy' => true,
     ];
 
     public function init()
     {
-
         parent::init();
     }
 

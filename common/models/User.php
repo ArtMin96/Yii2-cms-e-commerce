@@ -1,6 +1,8 @@
 <?php
 namespace common\models;
 
+use common\components\Helper;
+use common\models\query\UserQuery;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -11,11 +13,22 @@ use yii\web\IdentityInterface;
  * User model
  *
  * @property integer $id
+ * @property string $name
+ * @property string $last_name
+ * @property string $phone
  * @property string $username
+ * @property string $person_type
+ * @property string $avatar
+ * @property string $company
+ * @property string $address
+ * @property string $contact_person
+ * @property string $tax_code
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $verification_token
  * @property string $email
+ * @property string $email_verified
+ * @property string $ip
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
@@ -56,6 +69,20 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
+    }
+
+    public function init()
+    {
+        parent::init();
+        Yii::$app->user->on(\yii\web\User::EVENT_AFTER_LOGIN, [$this, 'updateIP']);
+    }
+
+    /**
+     * Update user IP address after login
+     */
+    public function updateIP() {
+        $this->ip = Helper::RealIP();
+        $this->save();
     }
 
     /**
@@ -208,5 +235,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @return UserQuery|\yii\db\ActiveQuery
+     */
+    public static function find() {
+        return new UserQuery(get_called_class());
     }
 }
