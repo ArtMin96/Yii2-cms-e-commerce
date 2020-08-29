@@ -126,6 +126,11 @@ class Pages extends \yii\db\ActiveRecord
         return $this->hasMany(Pages::className(), ['parent_id' => 'id']);
     }
 
+    public function getSeo()
+    {
+        return $this->hasOne(Seo::className(), ['page_id' => 'id']);
+    }
+
     /**
      * Gets root rows
      *

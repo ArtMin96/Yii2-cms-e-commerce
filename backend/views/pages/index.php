@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $searchModel common\models\PagesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Pages');
+$this->title = Yii::t('backend', 'Page');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pages-index container-fluid">
@@ -44,9 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 </a>
                                                 <a href="<?= Url::to(['pages/update/'.$page['id']]) ?>" class="artmin-menu-btn">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="fill-current "><path d="M4.3 10.3l10-10a1 1 0 0 1 1.4 0l4 4a1 1 0 0 1 0 1.4l-10 10a1 1 0 0 1-.7.3H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 .3-.7zM6 14h2.59l9-9L15 2.41l-9 9V14zm10-2a1 1 0 0 1 2 0v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6a1 1 0 1 1 0 2H2v14h14v-6z"></path></svg>
-                                                </a>
-                                                <a href="<?= Url::to(['pages/delete/'.$page['id']]) ?>" data-method="post" data-confirm="Yes?" class="artmin-menu-btn">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="fill-current "><path d="M6 4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6H1a1 1 0 1 1 0-2h5zM4 6v12h12V6H4zm8-2V2H8v2h4zM8 8a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V9a1 1 0 0 1 1-1z"></path></svg>
                                                 </a>
                                             </div>
                                         </div>
