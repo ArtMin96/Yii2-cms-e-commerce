@@ -101,7 +101,7 @@ class ArtMinToggleSwitchWidget extends InputWidget
                 $input = $type;
                 $checked = false;
                 return Html::$input($this->name, $checked, $options);
-            }else{
+            } else {
                 throw new InvalidArgumentException("Field type not supported");
             }
 

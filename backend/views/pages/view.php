@@ -21,7 +21,7 @@ $menus = new \common\components\Helper();
                 <div class="d-flex align-items-center mb-3">
                     <h4 class="artmin-menu-detail-title"><?= Html::encode($this->title) ?></h4>
                     <div class="ml-auto">
-                        <a href="#" class="btn btn-info">Create</a>
+                        <a href="#" class="btn btn-info"><?= Yii::t('backend', 'Create') ?></a>
                     </div>
                 </div>
 

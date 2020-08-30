@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\FileHelper;
 
 /**
  * This is the model class for table "seo".
@@ -46,8 +47,10 @@ class Seo extends \yii\db\ActiveRecord
     {
         return [
             [['page_id'], 'integer'],
-            [['meta_keywords', 'meta_description', 'og_description', 'twitter_description'], 'string'],
-            [['meta_title', 'meta_image', 'og_title', 'og_type', 'og_url', 'og_image', 'og_site_name', 'fb_admins', 'twitter_card', 'twitter_site', 'twitter_title', 'twitter_creator', 'twitter_image'], 'string', 'max' => 255],
+            [['meta_keywords'], 'safe'],
+            [['meta_description', 'og_description', 'twitter_description'], 'string'],
+            [['meta_title', 'og_title', 'og_type', 'og_url', 'og_image', 'og_site_name', 'fb_admins', 'twitter_card', 'twitter_site', 'twitter_title', 'twitter_creator', 'twitter_image'], 'string', 'max' => 255],
+            [['meta_image'], 'file', 'skipOnEmpty' => true, 'extensions' => ['jpg', 'jpeg', 'png']],
             [['page_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pages::className(), 'targetAttribute' => ['page_id' => 'id']],
         ];
     }
@@ -88,5 +91,55 @@ class Seo extends \yii\db\ActiveRecord
     public function getPage()
     {
         return $this->hasOne(Pages::className(), ['id' => 'page_id']);
+    }
+
+    public function save($runValidation = true, $attributeNames = null)
+    {
+
+        $path = Yii::getAlias('@frontend/web/storage/seo/'.$this->page_id.'/');
+
+        if (!empty($this->meta_image)) {
+            $fileName = Yii::$app->security->generateRandomString(12).'.'.$this->meta_image->extension;
+            $MetaImagePath = $path.$fileName;
+
+            if (!is_dir($path)) {
+                FileHelper::createDirectory($path, 0777);
+            }
+
+            $this->meta_image->saveAs($MetaImagePath);
+            $this->meta_image = $fileName;
+        }
+
+        if (!empty($this->og_image)) {
+            $ogFileName = Yii::$app->security->generateRandomString(12).'.'.$this->og_image->extension;
+            $OgImagePath = $path.$ogFileName;
+
+            if (!is_dir($path)) {
+                FileHelper::createDirectory($path, 0777);
+            }
+
+            $this->og_image->saveAs($OgImagePath);
+            $this->og_image = $ogFileName;
+        }
+
+        if (!empty($this->twitter_image)) {
+            $twitterFileName = Yii::$app->security->generateRandomString(12).'.'.$this->twitter_image->extension;
+            $TwitteerImagePath = $path.$twitterFileName;
+
+            if (!is_dir($path)) {
+                FileHelper::createDirectory($path, 0777);
+            }
+
+            $this->twitter_image->saveAs($TwitteerImagePath);
+            $this->twitter_image = $twitterFileName;
+        }
+
+        $saved = parent::save($runValidation, $attributeNames);
+
+        if (!$saved) {
+            return false;
+        }
+
+        return true;
     }
 }

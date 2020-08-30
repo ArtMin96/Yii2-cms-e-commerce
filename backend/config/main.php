@@ -12,7 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
-    'language' => 'hy',
+    'language' => 'en',
 //    'layout' => 'base',
     'components' => [
         'request' => [
