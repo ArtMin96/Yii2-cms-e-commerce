@@ -3,12 +3,18 @@
 namespace backend\controllers;
 
 use common\components\Helper;
+use common\models\Seo;
 use Yii;
 use common\models\Pages;
 use common\models\PagesSearch;
+use yii\base\Model;
+use yii\db\Exception;
+use yii\db\Transaction;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PagesController implements the CRUD actions for Pages model.
@@ -68,13 +74,47 @@ class PagesController extends Controller
     public function actionCreate()
     {
         $model = new Pages();
+        $seo = new Seo();
+
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $seo->load(Yii::$app->request->post());
+
+            $transaction = Yii::$app->db->beginTransaction();
+
+            try {
+                $valid = $model->validate();
+                $valid = $seo->validate() && $valid;
+
+                if ($valid) {
+                    $model->save();
+
+                    $seo->page_id = $model->id;
+                    $seo->meta_image = UploadedFile::getInstance($seo, 'meta_image');
+                    $seo->og_image = UploadedFile::getInstance($seo, 'og_image');
+                    $seo->twitter_image = UploadedFile::getInstance($seo, 'twitter_image');
+
+                    $seo->save();
+
+                    $transaction->commit();
+                    return $this->redirect(['update', 'id' => $model->id]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw new BadRequestHttpException($e->getMessage(), 0, $e);
+            }
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['update', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'seo' => $seo,
+            'activePages' => Pages::getActivePages(),
         ]);
     }
 
@@ -88,24 +128,59 @@ class PagesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $seo = Seo::findOne(['page_id' => $id]);
 
-        // Skip child nodes for selected parent
-        $ids = Pages::getChildrenString($id);
-
-        // Implode ids
-        $implodeIds = Helper::convertMultiArray(',', $ids);
-
-        $explode = explode(',', $implodeIds);
-        $explode[] = $id;
-        $skipedNodes = Pages::skipSelectedNodeChilds($explode);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (empty($seo)) {
+            $seo = new Seo();
         }
+
+        if (Yii::$app->request->isPost) {
+
+            $model->load(Yii::$app->request->post());
+            $seo->load(Yii::$app->request->post());
+
+            $transaction = Yii::$app->db->beginTransaction();
+
+            try {
+                $valid = $model->validate();
+                $valid = $seo->validate() && $valid;
+
+                if ($valid) {
+                    $model->save();
+
+                    $post = Yii::$app->request->post();
+
+                    if (!empty($post['Seo']['meta_keywords'])) {
+                        $keywords = implode(',', $post['Seo']['meta_keywords']);
+                    }
+                    $seo->meta_keywords = $keywords;
+
+                    $seo->meta_image = UploadedFile::getInstance($seo, 'meta_image');
+                    $seo->og_image = UploadedFile::getInstance($seo, 'og_image');
+                    $seo->twitter_image = UploadedFile::getInstance($seo, 'twitter_image');
+
+                    $seo->save(false);
+
+                    $transaction->commit();
+                    return $this->redirect(['update', 'id' => $model->id]);
+                } else {
+                    $transaction->rollBack();
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw new BadRequestHttpException($e->getMessage(), 0, $e);
+            }
+        }
+
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        }
 
         return $this->render('update', [
             'model' => $model,
-            'skipedNodes' => $skipedNodes
+            'seo' => $seo,
+            'skipedNodes' => Pages::skipSelectedNodeChilds($id),
+            'activePages' => Pages::getActivePages(),
         ]);
     }
 

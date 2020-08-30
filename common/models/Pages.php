@@ -2,11 +2,15 @@
 
 namespace common\models;
 
+use common\components\Helper;
 use omgdef\multilingual\MultilingualBehavior;
 use omgdef\multilingual\MultilingualQuery;
 use Yii;
+use yii\base\Exception;
+use yii\base\InvalidParamException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "pages".
@@ -138,7 +142,7 @@ class Pages extends \yii\db\ActiveRecord
      */
     public static function getRoot()
     {
-        return self::find()->where(['parent_id' => null, 'deleted' => 0])->orderBy(['order_sort' => SORT_ASC])->asArray()->all();
+        return self::find()->where(['parent_id' => null, 'deleted' => 0])->orderBy(['order_sort' => SORT_ASC])->all();
     }
 
     /**
@@ -161,10 +165,38 @@ class Pages extends \yii\db\ActiveRecord
      * Skip selected node child items
      *
      * @param $id
+     * @param bool $map
      * @return array|\yii\db\ActiveRecord[]
+     * @throws Exception
      */
     public static function skipSelectedNodeChilds($id)
     {
-        return self::find()->where(['NOT IN', 'id', $id])->all();
+        if (!empty($id)) {
+
+            // Skip child nodes for selected parent
+            $ids = self::getChildrenString($id);
+
+            // Implode ids
+            $implodeIds = Helper::convertMultiArray(',', $ids);
+
+            $explode = explode(',', $implodeIds);
+            $explode[] = $id;
+
+            $selectionList = self::find()->where(['NOT IN', 'id', $explode])->all();
+
+            return ArrayHelper::map($selectionList, 'id', 'name');
+        } else {
+            throw new Exception('Page ID cannot be null.');
+        }
+    }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getActivePages()
+    {
+        $selection = self::find()->where(['deleted' => 0])->all();
+
+        return ArrayHelper::map($selection, 'id', 'name');
     }
 }

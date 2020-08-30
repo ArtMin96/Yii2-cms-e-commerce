@@ -32,8 +32,23 @@ class m200822_160019_create_pages_lang_table extends Migration
             ],
             [
                 'parent_id' => 1,
-                'language' => 'ru',
+                'language' => 'hy',
                 'name' => 'Գլխավոր',
+            ],
+            [
+                'parent_id' => 2,
+                'language' => 'en',
+                'name' => 'Services',
+            ],
+            [
+                'parent_id' => 2,
+                'language' => 'ru',
+                'name' => 'Сервисы',
+            ],
+            [
+                'parent_id' => 2,
+                'language' => 'hy',
+                'name' => 'Շառայություններ',
             ],
         ]);
     }

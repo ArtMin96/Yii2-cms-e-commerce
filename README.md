@@ -68,4 +68,7 @@ Packages used:
 ##### [Kartik ActiveForm](https://github.com/kartik-v/yii2-widget-activeform)
 ##### [Kartik Select2](https://github.com/kartik-v/yii2-widget-select2)
 ##### [Kartik DepDrop](https://github.com/kartik-v/yii2-widget-depdrop)
+##### [Kartik Bootstrap File Input](https://github.com/kartik-v/bootstrap-fileinput)
+##### [Kartik File Input Widget](https://github.com/kartik-v/yii2-widget-fileinput)
 ##### [Yii2 Slugify](https://www.yiiframework.com/extension/yii2-slugify)
+##### [Yii2 Tags Input](https://github.com/mludvik/yii2-tags-input)

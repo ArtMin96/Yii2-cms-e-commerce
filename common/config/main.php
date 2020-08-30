@@ -1,7 +1,7 @@
 <?php
 return [
-    'language' => 'hy',
-    'sourceLanguage' => 'hy-HY',
+    'language' => 'en',
+    'sourceLanguage' => 'en-US',
     'timeZone' => 'Asia/Yerevan',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
